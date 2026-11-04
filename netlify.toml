@@ -1,0 +1,13 @@
+# Netlify hosts only the React dashboard (dashboard/). The OpenWA gateway itself is a long-running
+# NestJS server (WhatsApp sockets, Chromium, Postgres, Redis) and must be self-hosted elsewhere —
+# point the dashboard at it by setting VITE_API_URL (and optionally VITE_WS_URL) in Netlify.
+[build]
+  base = "dashboard"
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback so client-side routes (e.g. /sessions) don't 404 on reload.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
